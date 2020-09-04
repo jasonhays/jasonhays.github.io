@@ -32,17 +32,6 @@ window.$ = $
 
     <!-- experiment -->
     <script type='module'>
-/********************* 
- * Pavloviatest Test *
- *********************/
-
-import { PsychoJS } from 'https://lib.pavlovia.org/core.js';
-import * as core from 'https://lib.pavlovia.org/core.js';
-import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
-import { Scheduler } from 'https://lib.pavlovia.org/util.js';
-import * as util from 'https://lib.pavlovia.org/util.js';
-import * as visual from 'https://lib.pavlovia.org/visual.js';
-import { Sound } from 'https://lib.pavlovia.org/sound.js';
 
 // JASON was here
 var getSONA = function () {
@@ -57,11 +46,25 @@ var getSONA = function () {
 	}
 };
 	    
+/********************* 
+ * Pavloviatest Test *
+ *********************/
+
+import { PsychoJS } from 'https://lib.pavlovia.org/core.js';
+import * as core from 'https://lib.pavlovia.org/core.js';
+import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
+import { Scheduler } from 'https://lib.pavlovia.org/util.js';
+import * as util from 'https://lib.pavlovia.org/util.js';
+import * as visual from 'https://lib.pavlovia.org/visual.js';
+import { Sound } from 'https://lib.pavlovia.org/sound.js';
+
+	    
 	    
 // init psychoJS:
 var psychoJS = new PsychoJS({
   debug: true
 });
+// JASON was here (resources aren't on the Pavlovia server, so let's get them from here!)
 psychoJS.serverManager.getResource = function(name) { 
 	const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
 	//const path_data = this._resources.get(name);
@@ -80,6 +83,7 @@ psychoJS.serverManager.getResource = function(name) {
 	throw Object.assign(response, { error: 'unknown resource' });
 		
 };
+	    
 // open window:
 psychoJS.openWindow({
   fullscr: true,
@@ -89,7 +93,7 @@ psychoJS.openWindow({
 
 // store info about the experiment session:
 let expName = 'PavloviaTest';  // from the Builder filename that created this script
-// JASON was here
+// JASON was here (get the sona id from the URL)
 let expInfo = {'participant': getSONA(), 'session': '001'};
 
 	    
