@@ -64,6 +64,23 @@ import { Sound } from 'https://lib.pavlovia.org/sound.js';
 var psychoJS = new PsychoJS({
   debug: true
 });
+	    
+	    
+// https://stackoverflow.com/questions/37854355/wait-for-image-loading-to-complete-in-javascript/37854604
+function loadImage(imageUrl) {
+    let img;
+    const imageLoadPromise = new Promise(resolve => {
+        img = new Image();
+        img.onload = resolve;
+        img.src = imageUrl;
+    });
+
+    await imageLoadPromise;
+    console.log("image loaded");
+    return img;
+}
+	    
+	    
 // JASON was here (resources aren't on the Pavlovia server, so let's get them from here!)
 psychoJS.serverManager.getResource = function(name) { 
 	const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
@@ -72,9 +89,10 @@ psychoJS.serverManager.getResource = function(name) {
 	//	
 	var type = name.split('.')[1]
 	if (type === 'png' || type === 'jpg') {
-		var img = new Image();//document.createElement('img');
+		/*var img = new Image();//document.createElement('img');
 		img.src = name;
-		return img;
+		return img;*/
+		return loadImage(name);
 	}
 	else if (type === 'wav' || type === 'mp3' || type == 'ogg') {
 		// haven't looked into PsychoJS sounds yet
