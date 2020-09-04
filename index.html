@@ -2,16 +2,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js">
 	// allow jquery/ajax in later scripts
 	window.$ = $
-	$( document ).ready(function() {
-		//preload images
-		var images = ["Test.png"]
-		function preload(arrayOfImages) {
-		    $(arrayOfImages).each(function () {
-			$('<img />').attr('src',this).appendTo('body').css('display','none');
-		    });
-		}
-		preload(images);
-	});
 </script>
 
 
@@ -67,7 +57,14 @@ import * as util from 'https://lib.pavlovia.org/util.js';
 import * as visual from 'https://lib.pavlovia.org/visual.js';
 import { Sound } from 'https://lib.pavlovia.org/sound.js';
 
-	    
+//preload images
+var images = ["Test.png"]
+function preload(arrayOfImages) {
+    $(arrayOfImages).each(function () {
+	$('<img />').attr('src',this).appendTo('body').css('display','none');
+    });
+}
+preload(images);	    
 	    
 // init psychoJS:
 var psychoJS = new PsychoJS({
@@ -82,7 +79,8 @@ psychoJS.serverManager.getResource = function(name) {
 	//const path_data = this._resources.get(name);
 	//if (typeof path_data === 'undefined')
 	//	
-	var type = name.split('.')[1]
+	var type = name.split('.');
+	type = type[type.length-1];
 	if (type === 'png' || type === 'jpg') {
 		var img = new Image();//document.createElement('img');
 		img.src = name;
