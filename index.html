@@ -1,8 +1,15 @@
 <html>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js">
-// allow jquery/ajax in later scripts
-window.$ = $
+	// allow jquery/ajax in later scripts
+	window.$ = $
 
+	//preload images
+	var images = ["Test.png"]
+	var tmp = Image();
+	var i;
+	for (i = 0; i < images.length; i+=1)
+		tmp.src = images[0]
+	
 </script>
 
 
@@ -66,21 +73,6 @@ var psychoJS = new PsychoJS({
 });
 	    
 	    
-// https://stackoverflow.com/questions/37854355/wait-for-image-loading-to-complete-in-javascript/37854604
-async function loadImage(imageUrl) {
-    let img;
-    const imageLoadPromise = new Promise(resolve => {
-        img = new Image();
-        img.onload = resolve;
-        img.src = imageUrl;
-    });
-
-    await imageLoadPromise;
-    console.log("image loaded");
-	console.log(img instanceof HTMLImageElement);
-    return img;
-}
-	    
 	    
 // JASON was here (resources aren't on the Pavlovia server, so let's get them from here!)
 psychoJS.serverManager.getResource = function(name) { 
@@ -90,17 +82,8 @@ psychoJS.serverManager.getResource = function(name) {
 	//	
 	var type = name.split('.')[1]
 	if (type === 'png' || type === 'jpg') {
-		/*var img = new Image();//document.createElement('img');
+		var img = new Image();//document.createElement('img');
 		img.src = name;
-		return img;*/
-		let go = true;
-		let img = null;
-		loadImage(name).then(image => {
-			go = false;
-    			img = image;
-		});
-		while (go)
-			null;
 		return img;
 	}
 	else if (type === 'wav' || type === 'mp3' || type == 'ogg') {
