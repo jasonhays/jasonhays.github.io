@@ -63,13 +63,22 @@ var psychoJS = new PsychoJS({
   debug: true
 });
 psychoJS.serverManager.getResource = function(name) { 
-		const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
-		//const path_data = this._resources.get(name);
-		//if (typeof path_data === 'undefined')
-		//	throw Object.assign(response, { error: 'unknown resource' });
+	const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
+	//const path_data = this._resources.get(name);
+	//if (typeof path_data === 'undefined')
+	//	
+	var type = name.split('.')[1]
+	if (type === 'png' || type === 'jpg') {
 		var img = document.createElement('img');
 		img.src = name;
 		return img;
+	}
+	else if (type === 'wav' || type === 'mp3' || type == 'ogg') {
+		// haven't looked into PsychoJS sounds yet
+		return null;
+	}
+	throw Object.assign(response, { error: 'unknown resource' });
+		
 };
 // open window:
 psychoJS.openWindow({
