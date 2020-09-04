@@ -72,7 +72,7 @@ psychoJS.serverManager.getResource = function(name) {
 	//	
 	var type = name.split('.')[1]
 	if (type === 'png' || type === 'jpg') {
-		var img = document.createElement('img');
+		var img = new Image();//document.createElement('img');
 		img.src = name;
 		return img;
 	}
