@@ -63,7 +63,9 @@ var getSONA = function () {
 var psychoJS = new PsychoJS({
   debug: true
 });
-
+psychoJS.serverManager.getResource = function(image) {
+	return image	
+}
 // open window:
 psychoJS.openWindow({
   fullscr: true,
