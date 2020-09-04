@@ -45,6 +45,16 @@ var getSONA = function () {
 	}
 };
 	    
+//JASON was here: preload images
+var images = ["Test.png"]
+// https://stackoverflow.com/questions/476679/preloading-images-with-jquery
+function preload(arrayOfImages) {
+    $(arrayOfImages).each(function () {
+	$('<img />').attr('src',this).appendTo('body').css('display','none');
+    });
+}
+preload(images);
+	    
 /********************* 
  * Pavloviatest Test *
  *********************/
@@ -55,16 +65,7 @@ import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
 import { Scheduler } from 'https://lib.pavlovia.org/util.js';
 import * as util from 'https://lib.pavlovia.org/util.js';
 import * as visual from 'https://lib.pavlovia.org/visual.js';
-import { Sound } from 'https://lib.pavlovia.org/sound.js';
-
-//preload images
-var images = ["Test.png"]
-function preload(arrayOfImages) {
-    $(arrayOfImages).each(function () {
-	$('<img />').attr('src',this).appendTo('body').css('display','none');
-    });
-}
-preload(images);	    
+import { Sound } from 'https://lib.pavlovia.org/sound.js';	    
 	    
 // init psychoJS:
 var psychoJS = new PsychoJS({
