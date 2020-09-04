@@ -93,9 +93,15 @@ psychoJS.serverManager.getResource = function(name) {
 		/*var img = new Image();//document.createElement('img');
 		img.src = name;
 		return img;*/
-		loadImage(name).then(img => {
-    			return img;
+		var go = True;
+		var img = null;
+		loadImage(name).then(image => {
+			go = False;
+    			img = image;
 		});
+		while (go)
+			null;
+		return img;
 	}
 	else if (type === 'wav' || type === 'mp3' || type == 'ogg') {
 		// haven't looked into PsychoJS sounds yet
