@@ -116,9 +116,6 @@ psychoJS.schedule(psychoJS.gui.DlgFromDict({
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
 psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.button === 'OK'); }, flowScheduler, dialogCancelScheduler);
-
-	    
-psychoJS.experiment.offerDataForDownload = function(){return null;};
 	    
 // flowScheduler gets run if the participants presses OK
 flowScheduler.add(updateInfo); // add timeStamp
@@ -134,6 +131,9 @@ dialogCancelScheduler.add(quitPsychoJS, '', false);
 
 psychoJS.start({expName, expInfo});
 
+
+psychoJS.experiment.offerDataForDownload = function(){return null;};
+	    
 var frameDur;
 function updateInfo() {
   expInfo['date'] = util.MonotonicClock.getDateStr();  // add a simple timestamp
