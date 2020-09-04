@@ -63,9 +63,13 @@ var psychoJS = new PsychoJS({
   debug: true
 });
 psychoJS.serverManager.getResource = function(image) { 
-	var img = document.createElement('img');
-	img.src = image;
-	return img;
+		const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
+		//const path_data = this._resources.get(name);
+		//if (typeof path_data === 'undefined')
+		//	throw Object.assign(response, { error: 'unknown resource' });
+		var img = document.createElement('img');
+		img.src = name;
+		return img;
 };
 // open window:
 psychoJS.openWindow({
