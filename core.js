@@ -1,10 +1,10 @@
-import { MonotonicClock, Clock } from './util.js';
-import { Scheduler } from './util.js';
-import { PsychObject } from './util.js';
-import { getRequestError, toString, getUrlParameters, to_win } from './util.js';
-import { ExperimentHandler } from './data.js';
-import { Color } from './util.js';
-import { Logger } from './util.js';
+import { MonotonicClock, Clock } from 'https://lib.pavlovia.org/util.js';
+import { Scheduler } from 'https://lib.pavlovia.org/util.js';
+import { PsychObject } from 'https://lib.pavlovia.org/util.js';
+import { getRequestError, toString, getUrlParameters, to_win } from 'https://lib.pavlovia.org/util.js';
+import { ExperimentHandler } from 'https://lib.pavlovia.org/data.js';
+import { Color } from 'https://lib.pavlovia.org/util.js';
+import { Logger } from 'https://lib.pavlovia.org/util.js';
 
 /**
  * Manager responsible for the communication between the experiment running in the participant's browser and the remote PsychoJS manager running on the remote https://pavlovia.org server.
