@@ -59,7 +59,7 @@ var getSONA = function () {
 };
 	    
 	    
-ImageStim = (function (original) {
+visual.ImageStim = (function (original) {
     function ImageStim() {
         original.apply(this, arguments);   // apply constructor
         this.setImage = function(image, log = false) {       // overwrite method
@@ -70,10 +70,10 @@ ImageStim = (function (original) {
 		this.psychoJS.logger.debug('set the image of ImageStim: ' + this._name + ' as: src= ' + image.src + ', size= ' + image.width + 'x' + image.height);
         };
     }
-    ImageStim.prototype = original.prototype; // reset prototype
-    ImageStim.prototype.constructor = ImageStim; // fix constructor property
-    return ImageStim;
-})(ImageStim);
+    visual.ImageStim.prototype = original.prototype; // reset prototype
+    visual.ImageStim.prototype.constructor = visual.ImageStim; // fix constructor property
+    return visual.ImageStim;
+})(visual.ImageStim);
 	    
 // init psychoJS:
 var psychoJS = new PsychoJS({
@@ -93,6 +93,8 @@ psychoJS.openWindow({
 let expName = 'PavloviaTest';  // from the Builder filename that created this script
 // JASON was here
 let expInfo = {'participant': getSONA(), 'session': '001'};
+
+	    
 
 // schedule the experiment:
 psychoJS.schedule(psychoJS.gui.DlgFromDict({
@@ -139,6 +141,7 @@ function updateInfo() {
 
 var trialClock;
 var text;
+var image;
 var globalClock;
 var routineTimer;
 function experimentInit() {
@@ -155,6 +158,15 @@ function experimentInit() {
     depth: 0.0 
   });
   
+  image = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'image', units : undefined, 
+    image : 'Test.png', mask : undefined,
+    ori : 0, pos : [0, 0], size : [0.5, 0.5],
+    color : new util.Color([1, 1, 1]), opacity : 1,
+    flipHoriz : false, flipVert : false,
+    texRes : 128, interpolate : true, depth : -2.0 
+  });
   // Create some handy timers
   globalClock = new util.Clock();  // to track the time since experiment started
   routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
@@ -210,6 +222,7 @@ function trialRoutineBegin() {
   trialComponents = [];
   trialComponents.push(text);
   trialComponents.push(key_resp);
+  trialComponents.push(image);
   
   for (const thisComponent of trialComponents)
     if ('status' in thisComponent)
@@ -219,6 +232,7 @@ function trialRoutineBegin() {
 }
 
 var continueRoutine;
+var frameRemains;
 function trialRoutineEachFrame() {
   //------Loop for each frame of Routine 'trial'-------
   let continueRoutine = true; // until we're told otherwise
@@ -263,6 +277,19 @@ function trialRoutineEachFrame() {
     }
   }
   
+  
+  // *image* updates
+  if (t >= 0.0 && image.status === PsychoJS.Status.NOT_STARTED) {
+    // keep track of start time/frame for later
+    image.tStart = t;  // (not accounting for frame time here)
+    image.frameNStart = frameN;  // exact frame index
+    image.setAutoDraw(true);
+  }
+
+  frameRemains = 0.0 + 1.0 - psychoJS.window.monitorFramePeriod * 0.75;  // most of one frame period left
+  if (image.status === PsychoJS.Status.STARTED && t >= frameRemains) {
+    image.setAutoDraw(false);
+  }
   // check for quit (typically the Esc key)
   if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
     return psychoJS.quit('The [Escape] key was pressed. Goodbye!', false);
@@ -327,6 +354,16 @@ function endLoopIteration(thisScheduler, thisTrial) {
     }
   return Scheduler.Event.NEXT;
   };
+}
+
+
+function importConditions(loop) {
+  const trialIndex = loop.getTrialIndex();
+  return function () {
+    loop.setTrialIndex(trialIndex);
+    psychoJS.importAttributes(loop.getCurrentTrial());
+    return Scheduler.Event.NEXT;
+    };
 }
 
 
