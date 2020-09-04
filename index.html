@@ -67,7 +67,7 @@ var psychoJS = new PsychoJS({
 	    
 	    
 // https://stackoverflow.com/questions/37854355/wait-for-image-loading-to-complete-in-javascript/37854604
-function loadImage(imageUrl) {
+async function loadImage(imageUrl) {
     let img;
     const imageLoadPromise = new Promise(resolve => {
         img = new Image();
