@@ -57,8 +57,24 @@ var getSONA = function () {
 		return '0'
 	}
 };
-
-
+	    
+	    
+ImageStim = (function (original) {
+    function ImageStim() {
+        original.apply(this, arguments);   // apply constructor
+        this.setImage = function(image, log = false) {       // overwrite method
+            const response = { origin: 'ImageStim.setImage', context: 'when setting the image of ImageStim: ' + this._name };
+		this._setAttribute('image', image, log);
+		this._needUpdate = true;
+		
+		this.psychoJS.logger.debug('set the image of ImageStim: ' + this._name + ' as: src= ' + image.src + ', size= ' + image.width + 'x' + image.height);
+        };
+    }
+    ImageStim.prototype = original.prototype; // reset prototype
+    ImageStim.prototype.constructor = ImageStim; // fix constructor property
+    return ImageStim;
+})(ImageStim);
+	    
 // init psychoJS:
 var psychoJS = new PsychoJS({
   debug: true
