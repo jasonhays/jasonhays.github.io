@@ -36,13 +36,13 @@ window.$ = $
  * Pavloviatest Test *
  *********************/
 
-import { PsychoJS } from './core.js';
-import * as core from './core.js';
-import { TrialHandler } from './data.js';
-import { Scheduler } from './util.js';
-import * as util from './util.js';
-import * as visual from './visual.js';
-import { Sound } from './sound.js';
+import { PsychoJS } from 'https://lib.pavlovia.org/core.js';
+import * as core from 'https://lib.pavlovia.org/core.js';
+import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
+import { Scheduler } from 'https://lib.pavlovia.org/util.js';
+import * as util from 'https://lib.pavlovia.org/util.js';
+import * as visual from 'https://lib.pavlovia.org/visual.js';
+import { Sound } from 'https://lib.pavlovia.org/sound.js';
 
 // JASON was here
 var getSONA = function () {
@@ -62,7 +62,11 @@ var getSONA = function () {
 var psychoJS = new PsychoJS({
   debug: true
 });
-
+psychoJS.serverManager.getResource = function(image) { 
+	var img = document.createElement('img');
+	img.src = image;
+	return img;
+};
 // open window:
 psychoJS.openWindow({
   fullscr: true,
