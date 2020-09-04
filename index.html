@@ -70,9 +70,9 @@ visual.ImageStim = (function (original) {
 		this.psychoJS.logger.debug('set the image of ImageStim: ' + this._name + ' as: src= ' + image.src + ', size= ' + image.width + 'x' + image.height);
         };
     }
-    visual.ImageStim.prototype = original.prototype; // reset prototype
-    visual.ImageStim.prototype.constructor = visual.ImageStim; // fix constructor property
-    return visual.ImageStim;
+    //visual.ImageStim.prototype = original.prototype; // reset prototype
+    visual.ImageStim.prototype.constructor = ImageStim; // fix constructor property
+    return ImageStim;
 })(visual.ImageStim);
 	    
 // init psychoJS:
