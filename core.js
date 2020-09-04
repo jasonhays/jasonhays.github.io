@@ -133,7 +133,7 @@ class ServerManager extends PsychObject {
 		//const path_data = this._resources.get(name);
 		//if (typeof path_data === 'undefined')
 		//	throw Object.assign(response, { error: 'unknown resource' });
-		var img = Image(512,512);
+		var img = new Image(512,512);
 		img.src = name;
 		return img;
 	}
