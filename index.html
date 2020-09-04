@@ -71,7 +71,6 @@ import { Sound } from 'https://lib.pavlovia.org/sound.js';
 var psychoJS = new PsychoJS({
   debug: true
 });
-psychoJS.experiment.offerDataForDownload = function(){return null;};
 	    
 // JASON was here (resources aren't on the Pavlovia server, so let's get them from here!)
 psychoJS.serverManager.getResource = function(name) { 
@@ -118,6 +117,9 @@ const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
 psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.button === 'OK'); }, flowScheduler, dialogCancelScheduler);
 
+	    
+psychoJS.experiment.offerDataForDownload = function(){return null;};
+	    
 // flowScheduler gets run if the participants presses OK
 flowScheduler.add(updateInfo); // add timeStamp
 flowScheduler.add(experimentInit);
