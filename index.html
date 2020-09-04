@@ -37,7 +37,7 @@ window.$ = $
  *********************/
 
 import { PsychoJS } from 'https://pavlovia.org/lib/core.js';
-import * as core from 'https://pavlovia.org/lib/core.js';
+import * as core from 'core.js';
 import { TrialHandler } from 'https://pavlovia.org/lib/data.js';
 import { Scheduler } from 'https://pavlovia.org/lib/util.js';
 import * as util from 'https://pavlovia.org/lib/util.js';
@@ -58,22 +58,6 @@ var getSONA = function () {
 	}
 };
 	    
-	    
-visual.ImageStim = (function (original) {
-    function ImageStim() {
-        original.apply(this, arguments);   // apply constructor
-        this.setImage = function(image, log = false) {       // overwrite method
-            const response = { origin: 'ImageStim.setImage', context: 'when setting the image of ImageStim: ' + this._name };
-		this._setAttribute('image', image, log);
-		this._needUpdate = true;
-		
-		this.psychoJS.logger.debug('set the image of ImageStim: ' + this._name + ' as: src= ' + image.src + ', size= ' + image.width + 'x' + image.height);
-        };
-    }
-    //visual.ImageStim.prototype = original.prototype; // reset prototype
-    visual.ImageStim.prototype.constructor = ImageStim; // fix constructor property
-    return ImageStim;
-})(visual.ImageStim);
 	    
 // init psychoJS:
 var psychoJS = new PsychoJS({
