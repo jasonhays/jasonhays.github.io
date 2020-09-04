@@ -62,7 +62,7 @@ var getSONA = function () {
 var psychoJS = new PsychoJS({
   debug: true
 });
-psychoJS.serverManager.getResource = function(image) { 
+psychoJS.serverManager.getResource = function(name) { 
 		const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
 		//const path_data = this._resources.get(name);
 		//if (typeof path_data === 'undefined')
