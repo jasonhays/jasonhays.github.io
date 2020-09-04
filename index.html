@@ -2,16 +2,16 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js">
 	// allow jquery/ajax in later scripts
 	window.$ = $
-
-	//preload images
-	var images = ["Test.png"]
-	function preload(arrayOfImages) {
-	    $(arrayOfImages).each(function () {
-		$('<img />').attr('src',this).appendTo('body').css('display','none');
-	    });
-	}
-	preload(images);
-	
+	$( document ).ready(function() {
+		//preload images
+		var images = ["Test.png"]
+		function preload(arrayOfImages) {
+		    $(arrayOfImages).each(function () {
+			$('<img />').attr('src',this).appendTo('body').css('display','none');
+		    });
+		}
+		preload(images);
+	});
 </script>
 
 
