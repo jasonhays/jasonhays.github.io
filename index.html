@@ -93,10 +93,10 @@ psychoJS.serverManager.getResource = function(name) {
 		/*var img = new Image();//document.createElement('img');
 		img.src = name;
 		return img;*/
-		var go = True;
+		var go = true;
 		var img = null;
 		loadImage(name).then(image => {
-			go = False;
+			go = false;
     			img = image;
 		});
 		while (go)
