@@ -133,7 +133,9 @@ class ServerManager extends PsychObject {
 		//const path_data = this._resources.get(name);
 		//if (typeof path_data === 'undefined')
 		//	throw Object.assign(response, { error: 'unknown resource' });
-		return name;
+		var img = Image(512,512);
+		img.src = name;
+		return img;
 	}
 	setStatus(status) {
 		const response = { origin: 'ServerManager.setStatus', context: 'when changing the status of the server manager to: ' + toString(status) };
