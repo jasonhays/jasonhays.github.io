@@ -89,13 +89,14 @@ import * as util from 'https://lib.pavlovia.org/util.js';
 import * as visual from 'https://lib.pavlovia.org/visual.js';
 import { Sound } from 'https://lib.pavlovia.org/sound.js';
 
-// JASON: run the experiment after loading images ahead of time; observe for body/canvas changes
-function run_experiment() { body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
 	
 // init psychoJS:
 var psychoJS = new PsychoJS({
   debug: true
 });
+	    
+// JASON: run the experiment after loading images ahead of time; observe for body/canvas changes
+function run_experiment() { body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
 	    
 // JASON was here (resources aren't on the Pavlovia server, so let's get them from here!)
 psychoJS.serverManager.getResource = function(name) { 
