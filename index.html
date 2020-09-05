@@ -100,7 +100,8 @@ var observer = new MutationObserver(function(mutations) {
     }
   });
 });
-observer.observe(psychoJS, {
+var body_content = document.querySelector('body');
+observer.observe(body_content, {
   attributes: true //configure it to listen to attribute changes
 });
 	    
