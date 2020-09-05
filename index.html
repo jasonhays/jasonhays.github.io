@@ -58,18 +58,20 @@ var getSONA = function () {
 var images = ["Test.png"]
 var totalImages = images.length;
 var imagesLoaded = 0;
+function image_ready() {
+	imagesLoaded+=1;
+	if (imagesLoaded == totalImages) {
+		run_experiment();
+    	}
+}
 
-// https://stackoverflow.com/questions/3646036/preloading-images-with-javascript
-const preloadImage = src => 
-  new Promise(r => {
-    const image = new Image()
-    image.onload = r
-    image.onerror = r
-    image.src = src
-  })
-
-// Preload all of the images
-await Promise.all(images.map(x => preloadImage(x.src)))
+$(images).each(function () {
+	var img = new Image();
+	img.addEventListener('load', (event) => {
+		image_ready();
+	});
+	img.src = this;
+});
 	    
 // JASON was here
 function send(jso) {
@@ -103,7 +105,7 @@ var body_observer = new MutationObserver(function (e){
 	canvas_observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
 });
 // JASON: run the experiment after loading images ahead of time; observe for body/canvas changes
-
+function run_experiment() {
   body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
   canvas_observer = new MutationObserver(function (e){   
 	  canvas_observer.disconnect();
@@ -432,7 +434,7 @@ function quitPsychoJS(message, isCompleted) {
 
   return Scheduler.Event.QUIT;
 }
-
+}
 </script>
 
     <!-- older browsers -->
