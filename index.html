@@ -47,14 +47,22 @@ var getSONA = function () {
 	    
 //JASON was here: preload images
 var images = ["Test.png"]
-// https://stackoverflow.com/questions/476679/preloading-images-with-jquery
-function preload(arrayOfImages) {
-    $(arrayOfImages).each(function () {
-	$('<img />').attr('src',this).appendTo('body').css('display','none');
-    });
+var totalImages = images.length;
+var imagesLoaded = 0;
+
+$(arrayOfImages).each(function () {
+	var img = Image();
+	logo.addEventListener('load', (event) => {
+	images_ready();
+});
+img.src = this;
+	
+function image_ready() {
+	imagesLoaded+=1;
+	if (imagesLoaded == totalImages) {
+		run_experiment();
+    	}
 }
-preload(images);
-	    
 /********************* 
  * Pavloviatest Test *
  *********************/
@@ -65,8 +73,9 @@ import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
 import { Scheduler } from 'https://lib.pavlovia.org/util.js';
 import * as util from 'https://lib.pavlovia.org/util.js';
 import * as visual from 'https://lib.pavlovia.org/visual.js';
-import { Sound } from 'https://lib.pavlovia.org/sound.js';	    
-	    
+import { Sound } from 'https://lib.pavlovia.org/sound.js';
+	
+function run_experiment() {
 // init psychoJS:
 var psychoJS = new PsychoJS({
   debug: true
@@ -182,8 +191,8 @@ function experimentInit() {
   globalClock = new util.Clock();  // to track the time since experiment started
   routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
   
-// JASON: stop data download pop-up	
-psychoJS.experiment.save = function(a,b,c) {return null;};	
+  // JASON: stop data download pop-up	
+  psychoJS.experiment.save = function(a,b,c) {return null;};	
 	
   return Scheduler.Event.NEXT;
 }
@@ -409,7 +418,7 @@ function quitPsychoJS(message, isCompleted) {
 
   return Scheduler.Event.QUIT;
 }
-
+}
 </script>
 
     <!-- older browsers -->
