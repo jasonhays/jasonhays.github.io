@@ -1,10 +1,4 @@
 <html>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js">
-	// allow jquery/ajax in later scripts
-	window.$ = $
-</script>
-
-
 
     PavloviaTest [PsychoPy]
     
@@ -32,7 +26,22 @@
     <!-- experiment -->
     <script type='module'>
 
-// JASON was here
+/********************* 
+ * Pavloviatest Test *
+ *********************/
+
+import { PsychoJS } from 'https://lib.pavlovia.org/core.js';
+import * as core from 'https://lib.pavlovia.org/core.js';
+import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
+import { Scheduler } from 'https://lib.pavlovia.org/util.js';
+import * as util from 'https://lib.pavlovia.org/util.js';
+import * as visual from 'https://lib.pavlovia.org/visual.js';
+import { Sound } from 'https://lib.pavlovia.org/sound.js';
+
+// JASON paste after the imports in the module -- also, change the 
+//	    'participant' : '' to
+//	    'participant' : getURL()
+// add a } after the last function, which is quitPsychoJS, in order to close the run_experiment function
 var getSONA = function () {
     var url = window.location.href;
 	// the id is like: ?id=%SURVEY_CODE%
@@ -80,7 +89,7 @@ function send(jso) {
   }
 
   var url = 'https://script.google.com/macros/s/AKfycbzO-x61FNa2xTqSotvg5ZnesETaecWP9TEBeVySPQ/exec';
-  var jqxhr = window.$.ajax({
+  var jqxhr = $.ajax({
     url: url,
     method: "GET",
     data: {'data':JSON.stringify(sendit)}
@@ -96,48 +105,34 @@ var body_observer = new MutationObserver(function (e){
 	body_observer.disconnect();
 	canvas_observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
 });
-/********************* 
- * Pavloviatest Test *
- *********************/
-
-import { PsychoJS } from 'https://lib.pavlovia.org/core.js';
-import * as core from 'https://lib.pavlovia.org/core.js';
-import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
-import { Scheduler } from 'https://lib.pavlovia.org/util.js';
-import * as util from 'https://lib.pavlovia.org/util.js';
-import * as visual from 'https://lib.pavlovia.org/visual.js';
-import { Sound } from 'https://lib.pavlovia.org/sound.js';
-	    
 // JASON: run the experiment after loading images ahead of time; observe for body/canvas changes
-function run_experiment() { body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
+function run_experiment() { 
+  body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
+  canvas_observer = new MutationObserver(function (e){   
+	  canvas_observer.disconnect();
+	  // JASON: stop data download pop-up and instead, send over the data!	
+	  psychoJS.experiment.save = function(a,b,c) { send(psychoJS.experiment._trialsData);};
+	  // resources aren't on the Pavlovia server, so let's get them from here!)
+	  psychoJS.serverManager.getResource = function(name) { 
+		const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
+		//const path_data = this._resources.get(name);
+		//if (typeof path_data === 'undefined')
+		//	
+		var type = name.split('.');
+		type = type[type.length-1];
+		if (type === 'png' || type === 'jpg') {
+			var img = new Image();//document.createElement('img');
+			img.src = name;
+			return img;
+		}
+		else if (type === 'wav' || type === 'mp3' || type == 'ogg') {
+			// haven't looked into PsychoJS sounds yet
+			return null;
+		}
+		throw Object.assign(response, { error: 'unknown resource' });
 
-canvas_observer = new MutationObserver(function (e){   
-  canvas_observer.disconnect();
-  // JASON: stop data download pop-up and instead, send over the data!
-	
-  psychoJS.experiment.save = function(a,b,c) { send(psychoJS.experiment._trialsData);};
-  
-	// JASON was here (resources aren't on the Pavlovia server, so let's get them from here!)
-  psychoJS.serverManager.getResource = function(name) { 
-	const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
-	//const path_data = this._resources.get(name);
-	//if (typeof path_data === 'undefined')
-	//	
-	var type = name.split('.');
-	type = type[type.length-1];
-	if (type === 'png' || type === 'jpg') {
-		var img = new Image();//document.createElement('img');
-		img.src = name;
-		return img;
-	}
-	else if (type === 'wav' || type === 'mp3' || type == 'ogg') {
-		// haven't looked into PsychoJS sounds yet
-		return null;
-	}
-	throw Object.assign(response, { error: 'unknown resource' });
-		
-  };
-}); 
+	  };
+  }); 
 
 
 
