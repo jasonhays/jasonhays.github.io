@@ -183,7 +183,7 @@ function experimentInit() {
   routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
   
 // JASON: stop data download pop-up	
-psychoJS.experiment.offerDataForDownload = function(key, data, name) {return null;};	
+psychoJS.experiment.save = function(a,b,c) {return null;};	
 	
   return Scheduler.Event.NEXT;
 }
