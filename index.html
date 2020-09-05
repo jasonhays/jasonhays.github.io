@@ -182,14 +182,10 @@ function experimentInit() {
   globalClock = new util.Clock();  // to track the time since experiment started
   routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
   
+// JASON: stop data download pop-up	
+psychoJS.experiment.offerDataForDownload = function(key, data, name) {return null;};	
+	
   return Scheduler.Event.NEXT;
-}
-	    
-// JASON: wrap the function so you can prevent the data download menu.
-experimentInit = function() {
-	var tmp = experimentInit();
-	psychoJS.experiment.offerDataForDownload = function(key, data, name) {return null;};
-	return tmp;
 }
 	    
 var trials;
