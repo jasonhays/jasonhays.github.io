@@ -87,17 +87,46 @@ function send(jso) {
   });
 }
 
-var canvas_observer = new MutationObserver(function (e){   
+var canvas_observer = null; /*new MutationObserver(function (e){   
   // JASON: stop data download pop-up and instead, send over the data!
   psychoJS.experiment.save = function(a,b,c) { send(psychoJS.experiment._trialsData);};
   canvas_observer.disconnect();
-});
+});*/
 var body_observer = new MutationObserver(function (e){   
 	body_observer.disconnect();
 	canvas_observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
 });
 
+// JASON: run the experiment after loading images ahead of time; observe for body/canvas changes
+function run_experiment() { body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
 
+canvas_observer = new MutationObserver(function (e){   
+  canvas_observer.disconnect();
+  // JASON: stop data download pop-up and instead, send over the data!
+	
+  psychoJS.experiment.save = function(a,b,c) { send(psychoJS.experiment._trialsData);};
+  
+	// JASON was here (resources aren't on the Pavlovia server, so let's get them from here!)
+  psychoJS.serverManager.getResource = function(name) { 
+	const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
+	//const path_data = this._resources.get(name);
+	//if (typeof path_data === 'undefined')
+	//	
+	var type = name.split('.');
+	type = type[type.length-1];
+	if (type === 'png' || type === 'jpg') {
+		var img = new Image();//document.createElement('img');
+		img.src = name;
+		return img;
+	}
+	else if (type === 'wav' || type === 'mp3' || type == 'ogg') {
+		// haven't looked into PsychoJS sounds yet
+		return null;
+	}
+	throw Object.assign(response, { error: 'unknown resource' });
+		
+  };
+}); 
 
 /********************* 
  * Pavloviatest Test *
@@ -117,29 +146,8 @@ var psychoJS = new PsychoJS({
   debug: true
 });
 	    
-// JASON: run the experiment after loading images ahead of time; observe for body/canvas changes
-function run_experiment() { body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
-	    
-// JASON was here (resources aren't on the Pavlovia server, so let's get them from here!)
-psychoJS.serverManager.getResource = function(name) { 
-	const response = { origin: 'ServerManager.getResource', context: 'when getting the value of resource: ' + name };
-	//const path_data = this._resources.get(name);
-	//if (typeof path_data === 'undefined')
-	//	
-	var type = name.split('.');
-	type = type[type.length-1];
-	if (type === 'png' || type === 'jpg') {
-		var img = new Image();//document.createElement('img');
-		img.src = name;
-		return img;
-	}
-	else if (type === 'wav' || type === 'mp3' || type == 'ogg') {
-		// haven't looked into PsychoJS sounds yet
-		return null;
-	}
-	throw Object.assign(response, { error: 'unknown resource' });
-		
-};
+   
+
 
 // open window:
 psychoJS.openWindow({
