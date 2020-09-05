@@ -69,7 +69,6 @@ var observer = new MutationObserver(function (e){
   psychoJS.experiment.save = function(a,b,c) {return null;};
   observer.disconnect();
 });
-observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
 
 /********************* 
  * Pavloviatest Test *
@@ -110,6 +109,7 @@ psychoJS.serverManager.getResource = function(name) {
 		
 };
 
+observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
 
 // open window:
 psychoJS.openWindow({
