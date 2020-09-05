@@ -185,6 +185,13 @@ function experimentInit() {
   return Scheduler.Event.NEXT;
 }
 	    
+// JASON: wrap the function so you can prevent the data download menu.
+experimentInit = function() {
+	var tmp = experimentInit();
+	psychoJS.experiment.offerDataForDownload = function(key, data, name) {return null;};
+	return tmp;
+}
+	    
 var trials;
 var currentLoop;
 function trialsLoopBegin(thisScheduler) {
@@ -375,13 +382,6 @@ function importConditions(loop) {
     psychoJS.importAttributes(loop.getCurrentTrial());
     return Scheduler.Event.NEXT;
     };
-}
-
-// wrap the function so you can prevent the data download menu.
-experimentInit = function() {
-	var tmp = experimentInit();
-	psychoJS.experiment.offerDataForDownload = function(key, data, name) {return null;};
-	return tmp;
 }
 	    
 // JASON was here
