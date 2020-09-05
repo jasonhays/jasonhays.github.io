@@ -50,12 +50,14 @@ var images = ["Test.png"]
 var totalImages = images.length;
 var imagesLoaded = 0;
 
-$(arrayOfImages).each(function () {
+$(images).each(function () {
 	var img = Image();
-	logo.addEventListener('load', (event) => {
-	images_ready();
-});
-img.src = this;
+	img.addEventListener('load', (event) => {
+		images_ready();
+	});
+	img.src = this;
+}
+
 	
 function image_ready() {
 	imagesLoaded+=1;
