@@ -50,6 +50,13 @@ var images = ["Test.png"]
 var totalImages = images.length;
 var imagesLoaded = 0;
 
+function image_ready() {
+	imagesLoaded+=1;
+	if (imagesLoaded == totalImages) {
+		run_experiment();
+    	}
+}
+	    
 $(images).each(function () {
 	var img = new Image();
 	img.addEventListener('load', (event) => {
@@ -59,12 +66,7 @@ $(images).each(function () {
 });
 
 	
-function image_ready() {
-	imagesLoaded+=1;
-	if (imagesLoaded == totalImages) {
-		run_experiment();
-    	}
-}
+
 /********************* 
  * Pavloviatest Test *
  *********************/
