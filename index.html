@@ -96,7 +96,18 @@ var body_observer = new MutationObserver(function (e){
 	body_observer.disconnect();
 	canvas_observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
 });
+/********************* 
+ * Pavloviatest Test *
+ *********************/
 
+import { PsychoJS } from 'https://lib.pavlovia.org/core.js';
+import * as core from 'https://lib.pavlovia.org/core.js';
+import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
+import { Scheduler } from 'https://lib.pavlovia.org/util.js';
+import * as util from 'https://lib.pavlovia.org/util.js';
+import * as visual from 'https://lib.pavlovia.org/visual.js';
+import { Sound } from 'https://lib.pavlovia.org/sound.js';
+	    
 // JASON: run the experiment after loading images ahead of time; observe for body/canvas changes
 function run_experiment() { body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
 
@@ -128,17 +139,7 @@ canvas_observer = new MutationObserver(function (e){
   };
 }); 
 
-/********************* 
- * Pavloviatest Test *
- *********************/
 
-import { PsychoJS } from 'https://lib.pavlovia.org/core.js';
-import * as core from 'https://lib.pavlovia.org/core.js';
-import { TrialHandler } from 'https://lib.pavlovia.org/data.js';
-import { Scheduler } from 'https://lib.pavlovia.org/util.js';
-import * as util from 'https://lib.pavlovia.org/util.js';
-import * as visual from 'https://lib.pavlovia.org/visual.js';
-import { Sound } from 'https://lib.pavlovia.org/sound.js';
 
 	
 // init psychoJS:
