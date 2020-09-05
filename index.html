@@ -64,8 +64,12 @@ $(images).each(function () {
 	});
 	img.src = this;
 });
-
-	
+var observer = new MutationObserver(function (e){   
+  // JASON: stop data download pop-up	
+  psychoJS.experiment.save = function(a,b,c) {return null;};
+  observer.disconnect();
+});
+observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
 
 /********************* 
  * Pavloviatest Test *
@@ -105,7 +109,8 @@ psychoJS.serverManager.getResource = function(name) {
 	throw Object.assign(response, { error: 'unknown resource' });
 		
 };
-	    
+
+
 // open window:
 psychoJS.openWindow({
   fullscr: true,
@@ -193,10 +198,7 @@ function experimentInit() {
   });
   // Create some handy timers
   globalClock = new util.Clock();  // to track the time since experiment started
-  routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
-  
-  // JASON: stop data download pop-up	
-  psychoJS.experiment.save = function(a,b,c) {return null;};	
+  routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine	
 	
   return Scheduler.Event.NEXT;
 }
