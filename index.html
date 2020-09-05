@@ -92,18 +92,6 @@ psychoJS.serverManager.getResource = function(name) {
 	throw Object.assign(response, { error: 'unknown resource' });
 		
 };
-// JASON: look for the "experiment" to be added to psychoJS
-var observer = new MutationObserver(function(mutations) {
-  mutations.forEach(function(mutation) {
-    if (mutation.type == "attributes") {
-      console.log("attributes changed")
-    }
-  });
-});
-var body_content = document.querySelector('body');
-observer.observe(body_content, {
-  attributes: true //configure it to listen to attribute changes
-});
 	    
 // open window:
 psychoJS.openWindow({
@@ -196,7 +184,7 @@ function experimentInit() {
   
   return Scheduler.Event.NEXT;
 }
-
+	    
 var trials;
 var currentLoop;
 function trialsLoopBegin(thisScheduler) {
@@ -389,7 +377,13 @@ function importConditions(loop) {
     };
 }
 
-
+// wrap the function so you can prevent the data download menu.
+experimentInit = function() {
+	var tmp = experimentInit();
+	psychoJS.experiment.offerDataForDownload = function(key, data, name) {return null;};
+	return tmp;
+}
+	    
 // JASON was here
 function send(jso) {
   var sendit = {};
