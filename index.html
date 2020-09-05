@@ -51,7 +51,7 @@ var totalImages = images.length;
 var imagesLoaded = 0;
 
 $(images).each(function () {
-	var img = Image();
+	var img = new Image();
 	img.addEventListener('load', (event) => {
 		images_ready();
 	});
