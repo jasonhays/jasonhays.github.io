@@ -60,7 +60,7 @@ function image_ready() {
 $(images).each(function () {
 	var img = new Image();
 	img.addEventListener('load', (event) => {
-		images_ready();
+		image_ready();
 	});
 	img.src = this;
 });
