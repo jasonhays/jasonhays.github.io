@@ -65,10 +65,32 @@ $(images).each(function () {
 	img.src = this;
 });
 	    
-	    
+// JASON was here
+function send(jso) {
+  var sendit = {};
+  Object.keys(jso[0]).forEach(function(key) {
+      sendit[key] = []
+    });
+	
+  var i = 0;
+  for (i=0; i < jso.length; i+=1) {
+    Object.keys(jso[i]).forEach(function(key) {
+      sendit[key].push(jso[i][key])
+    });
+  }
+
+  var url = 'https://script.google.com/macros/s/AKfycbzO-x61FNa2xTqSotvg5ZnesETaecWP9TEBeVySPQ/exec';
+  var jqxhr = window.$.ajax({
+    url: url,
+    method: "GET",
+    data: {'data':JSON.stringify(sendit)}
+  });
+}
+
 var canvas_observer = new MutationObserver(function (e){   
-  // JASON: stop data download pop-up	
-  psychoJS.experiment.save = function(a,b,c) {return null;};
+  // JASON: stop data download pop-up and instead, send over the data!
+  psychoJS.experiment.save = function(a,b,c) { send(psychoJS.experiment._trialsData);};
+  canvas_observer.disconnect();
 });
 var body_observer = new MutationObserver(function (e){   
 	body_observer.disconnect();
@@ -403,30 +425,7 @@ function importConditions(loop) {
     };
 }
 	    
-// JASON was here
-function send(jso) {
-  var sendit = {};
-  Object.keys(jso[0]).forEach(function(key) {
-      sendit[key] = []
-    });
-	
-  var i = 0;
-  for (i=0; i < jso.length; i+=1) {
-    Object.keys(jso[i]).forEach(function(key) {
-      sendit[key].push(jso[i][key])
-    });
-  }
-
-  var url = 'https://script.google.com/macros/s/AKfycbzO-x61FNa2xTqSotvg5ZnesETaecWP9TEBeVySPQ/exec';
-  var jqxhr = window.$.ajax({
-    url: url,
-    method: "GET",
-    data: {'data':JSON.stringify(sendit)}
-  });
-}
 function quitPsychoJS(message, isCompleted) {
-  // JASON was here
-  send(psychoJS.experiment._trialsData);
   psychoJS.window.close();
   psychoJS.quit({message: message, isCompleted: isCompleted});
 
