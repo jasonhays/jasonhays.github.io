@@ -64,11 +64,18 @@ $(images).each(function () {
 	});
 	img.src = this;
 });
-var observer = new MutationObserver(function (e){   
+	    
+	    
+var canvas_observer = new MutationObserver(function (e){   
   // JASON: stop data download pop-up	
   psychoJS.experiment.save = function(a,b,c) {return null;};
-  observer.disconnect();
 });
+var body_observer = new MutationObserver(function (e){   
+	body_observer.disconnect();
+	canvas_observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
+});
+
+
 
 /********************* 
  * Pavloviatest Test *
@@ -81,8 +88,10 @@ import { Scheduler } from 'https://lib.pavlovia.org/util.js';
 import * as util from 'https://lib.pavlovia.org/util.js';
 import * as visual from 'https://lib.pavlovia.org/visual.js';
 import { Sound } from 'https://lib.pavlovia.org/sound.js';
+
+// JASON: run the experiment after loading images ahead of time; observe for body/canvas changes
+function run_experiment() { body_observer.observe(document.getElementsByTagName('body')[0], {attributes:true, child:true, subtree:true})
 	
-function run_experiment() {
 // init psychoJS:
 var psychoJS = new PsychoJS({
   debug: true
@@ -108,8 +117,6 @@ psychoJS.serverManager.getResource = function(name) {
 	throw Object.assign(response, { error: 'unknown resource' });
 		
 };
-
-observer.observe(document.getElementsByTagName('canvas')[0], {attributes:true, child:true, subtree:true})
 
 // open window:
 psychoJS.openWindow({
