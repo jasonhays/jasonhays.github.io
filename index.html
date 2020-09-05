@@ -92,6 +92,17 @@ psychoJS.serverManager.getResource = function(name) {
 	throw Object.assign(response, { error: 'unknown resource' });
 		
 };
+// JASON: look for the "experiment" to be added to psychoJS
+var observer = new MutationObserver(function(mutations) {
+  mutations.forEach(function(mutation) {
+    if (mutation.type == "attributes") {
+      console.log("attributes changed")
+    }
+  });
+});
+observer.observe(psychoJS, {
+  attributes: true //configure it to listen to attribute changes
+});
 	    
 // open window:
 psychoJS.openWindow({
